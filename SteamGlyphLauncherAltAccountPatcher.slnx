@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="SteamGlyphLauncherAltAccountPatcher/SteamGlyphLauncherAltAccountPatcher.csproj" Id="30f79ccd-aae8-4e71-8f55-7c77bb3a04b3">
+    <Platform Project="x86" />
+  </Project>
+</Solution>
