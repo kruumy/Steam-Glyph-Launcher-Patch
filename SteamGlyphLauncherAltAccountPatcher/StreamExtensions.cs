@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq; // Still included for general C# development context, though not strictly used in this specific function.
 
 namespace SteamGlyphLauncherAltAccountPatcher
 {
@@ -13,7 +12,7 @@ namespace SteamGlyphLauncherAltAccountPatcher
         /// <param name="stream">The FileStream to search within. The stream must be readable and seekable.</param>
         /// <param name="pattern">The byte array pattern to find</param>
         /// <returns>True if the pattern was found and the stream position was set; False otherwise.</returns>
-        public static bool SeekToByteArray( FileStream stream, byte[] pattern )
+        public static bool SeekToByteArray( this FileStream stream, byte[] pattern )
         {
             if ( stream == null || pattern == null || pattern.Length == 0 )
             {

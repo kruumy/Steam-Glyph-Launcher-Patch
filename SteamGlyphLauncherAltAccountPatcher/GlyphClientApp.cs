@@ -59,7 +59,7 @@ namespace SteamGlyphLauncherAltAccountPatcher
 
             using ( var stream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite) )
             {
-                if ( StreamExtensions.SeekToByteArray(stream, unpatchedBytes) )
+                if ( stream.SeekToByteArray(unpatchedBytes) )
                 {
                     stream.Write(patchedBytes, 0, patchedBytes.Length);
                     stream.Flush();
@@ -83,7 +83,7 @@ namespace SteamGlyphLauncherAltAccountPatcher
 
             using ( var stream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite) )
             {
-                if ( StreamExtensions.SeekToByteArray(stream, patchedBytes) )
+                if ( stream.SeekToByteArray(patchedBytes) )
                 {
                     stream.Write(unpatchedBytes, 0, unpatchedBytes.Length);
                     stream.Flush();
