@@ -30,20 +30,25 @@ namespace SteamGlyphLauncherAltAccountPatcher
         }
 
         public bool IsValid => !string.IsNullOrEmpty(filePath) && File.Exists(filePath) == true && Path.GetFileName(filePath).Equals("GlyphClientApp.exe", StringComparison.OrdinalIgnoreCase);
+
+        private readonly byte[] unpatchedBytes = { 0x75, 0x7A, 0x8B, 0xCE };
+        private readonly byte[] patchedBytes = { 0xEB, 0x7A, 0x8B, 0xCE };
+
         public bool IsPatched
         {
             get
             {
-                if ( !IsValid ) return false;
+                if ( !IsValid )
+                {
+                    return false;
+                }
+
                 using ( var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite) )
                 {
                     return StreamExtensions.SeekToByteArray(stream, patchedBytes);
                 }
             }
         }
-
-        private readonly byte[] unpatchedBytes = { 0x75, 0x7A, 0x8B, 0xCE };
-        private readonly byte[] patchedBytes = { 0xEB, 0x7A, 0x8B, 0xCE };
 
         public bool Patch()
         {
