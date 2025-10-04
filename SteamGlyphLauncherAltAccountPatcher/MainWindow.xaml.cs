@@ -39,8 +39,9 @@ namespace SteamGlyphLauncherAltAccountPatcher
             }
         }
 
-        private void PatchButton_Click( object sender, RoutedEventArgs e )
+        private async void PatchButton_Click( object sender, RoutedEventArgs e )
         {
+            PatchButton.IsEnabled = false;
             if ( GlyphClientApp.IsPatched )
             {
                 GlyphClientApp.Unpatch();
@@ -49,6 +50,54 @@ namespace SteamGlyphLauncherAltAccountPatcher
             {
                 GlyphClientApp.Patch();
             }
+            await Task.Delay(1000);
+            PatchButton.IsEnabled = true;
+        }
+
+        void UpdateStatusText()
+        {
+            switch ( GlyphClientApp.LastStatus )
+            {
+                case GlyphClientApp.Status.WaitingForFilePath:
+                    StatusTextBlock.Text = "Waiting for GlyphClientApp.exe...";
+                    break;
+                case GlyphClientApp.Status.InvalidFilePath:
+                    StatusTextBlock.Text = "Invalid file path. Please select a valid GlyphClientApp.exe...";
+                    break;
+                case GlyphClientApp.Status.ValidFilePathNotPatched:
+                    StatusTextBlock.Text = "GlyphClientApp.exe is valid and not patched.";
+                    break;
+                case GlyphClientApp.Status.ValidFilePathPatched:
+                    StatusTextBlock.Text = "GlyphClientApp.exe is valid and patched.";
+                    break;
+                case GlyphClientApp.Status.SuccessfullyPatched:
+                    StatusTextBlock.Text = "Successfully Patched!";
+                    break;
+                case GlyphClientApp.Status.SuccessfullyUnpatched:
+                    StatusTextBlock.Text = "Successfully Unpatched!";
+                    break;
+                case GlyphClientApp.Status.PatchFailed:
+                    StatusTextBlock.Text = "Patch Failed :(";
+                    break;
+                case GlyphClientApp.Status.UnpatchFailed:
+                    StatusTextBlock.Text = "Unpatch Failed :(";
+                    break;
+                default:
+                    StatusTextBlock.Text = GlyphClientApp.LastStatus.ToString();
+                    break;
+            }
+
+        }
+        private void StatusTextBlock_Initialized( object sender, EventArgs e )
+        {
+            UpdateStatusText();
+            GlyphClientApp.PropertyChanged += ( s, ev ) =>
+            {
+                if ( ev.PropertyName == nameof(GlyphClientApp.LastStatus) )
+                {
+                    this.UpdateStatusText();
+                }
+            };
         }
     }
 }

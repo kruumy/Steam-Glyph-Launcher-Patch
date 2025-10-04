@@ -7,9 +7,6 @@
         xmlns:Converters="clr-namespace:SteamGlyphLauncherAltAccountPatcher.Converters" x:Class="SteamGlyphLauncherAltAccountPatcher.MainWindow"
         mc:Ignorable="d"
         Title="Steam Glyph Launcher Patcher" Height="155" Width="425" ResizeMode="NoResize" DataContext="{Binding Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}">
-    <Window.Resources>
-        <Converters:BoolToStringChoiceConverter x:Key="BoolToStringChoiceConverter"/>
-    </Window.Resources>
     <Grid Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -46,9 +43,9 @@
 
         <TextBlock x:Name="StatusTextBlock"
                    Grid.Row="1" 
-                   Text="Please select GlyphClientApp.exe" 
+                   Text="" 
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center" Initialized="StatusTextBlock_Initialized"/>
 
         <Button x:Name="PatchButton"
                 Grid.Row="2" 
